@@ -1,5 +1,7 @@
 import pygame
-class Asteroid:
+
+
+class Bullet:
 
     def __init__(self, x, y, w, h, speed, texture):
         self.speed = speed
@@ -12,5 +14,3 @@ class Asteroid:
     def render(self, window):
         window.blit(self.texture, (self.hit_box.x, self.hit_box.y))
 
-    def move(self):
-        self.hit_box.y += self.speed
