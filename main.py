@@ -12,7 +12,7 @@ window = pygame.display.set_mode((800, 500))
 fps = pygame.time.Clock()
 
 rocket = rocket.Rocket(105, 300, 95, 190, 5, "rocket.png")
-
+patrons = []
 game = True
 
 asteroids = []
@@ -45,12 +45,15 @@ while game:
 
     rocket.render(window)
     rocket.move()
-
+    for patron in patrons:
+        patron.move()
+    
     for asteroid in asteroids:
         asteroid.move()
         if asteroid.hit_box.y > 800:
             asteroid.hit_box.y = random.randint(-100, 0)
             asteroid.hit_box.x = random.randint(0, 800)
+
     for asteroid in asteroids:
         asteroid.render(window)
 

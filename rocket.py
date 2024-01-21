@@ -21,7 +21,7 @@ class Rocket:
 
 
     def move(self):
-        for patron in self.patrons:
+
 
         keys = pygame.key.get_pressed()
         if keys[pygame.K_d]:
@@ -30,3 +30,5 @@ class Rocket:
             self.hit_box.x -= self.speed
         if keys[pygame.K_e]:
             self.patrons.append(bullet.Bullet(self.hit_box.x, self.hit_box.y, 20, 40, 5, "bullet.png"))
+        for patron in self.patrons:
+            patron.move()
