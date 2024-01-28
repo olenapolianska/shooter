@@ -9,6 +9,10 @@ import asteroid
 pygame.init()
 
 def start_game():
+    def write_data():
+        global settings
+        with open("settings.json", "w", encoding="utf-8") as file:
+            json.dump(settings, file)
     def read_data():
         global settings
         with open("settings.json", "r", encoding="utf-8") as file:
@@ -23,14 +27,14 @@ def start_game():
     game = True
 
     asteroids = []
-    asteroids.append(asteroid.Asteroid( random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid( random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
-    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 3, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid( random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid( random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
+    asteroids.append(asteroid.Asteroid(random.randint(0, 800), random.randint(-1000, 0), 60, 60, 2, "asteroid.png"))
 
     while game:
         for event in pygame.event.get():
@@ -40,6 +44,8 @@ def start_game():
             if event.type == pygame.QUIT:
                 game = False
                 pygame.quit()
+                write_data()
+                return
 
 
 
@@ -64,6 +70,14 @@ def start_game():
 
         for a in asteroids:
             a.render(window)
+
+        for a in asteroids:
+            for b in r.patrons:
+                if a.hit_box.colliderect(b.hit_box):
+                    r.patrons.remove(b)
+                    a.hit_box.y = -500
+                    settings["money"] += 1
+                    break
 
 
         pygame.display.flip()
